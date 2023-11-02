@@ -50,7 +50,12 @@ cd build
 sudo cmake ..
 ```
 
-6. Compile and install the library:
+6. To run the unit tests:
+```bash
+./libtest
+```
+
+7. Compile and install the library:
 ```bash
 sudo make install
 ```
