@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "AES/AES.h"
+#include "AES.h"
 
 TEST(AESTest, EncryptionAndDecryption) {
     std::string data = "StarkNet is an open-source, decentralized platform for building scalable "
