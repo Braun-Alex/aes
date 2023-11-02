@@ -47,7 +47,7 @@ cd build
 
 5. Generate the Makefile using CMake:
 ```bash
-cmake ..
+sudo cmake ..
 ```
 
 6. Compile and install the library:
@@ -96,7 +96,7 @@ set(${PROJECT_NAME} ${HEADERS} ${SOURCES})
 
 6. Link against AES Wrapper and the required libraries:
 ```cmake
-target_link_libraries(${PROJECT_NAME} PUBLIC AES Poco::Crypto Poco::Util)
+target_link_libraries(${PROJECT_NAME} PUBLIC aes_wrapper Poco::Crypto Poco::Util)
 ```
 
 After installing and configuring the AES Wrapper, you can use it in your C++ application to encrypt and decrypt data. Here is an example:
