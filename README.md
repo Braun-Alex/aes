@@ -105,8 +105,8 @@ After installing and configuring the AES Wrapper, you can use it in your C++ app
 #include <iostream>
 
 int main() {
-    std::string name = "Alex Braun", passphrase = "AlAzazaAl123";
-    std::string encryptedData = AES::encrypt(name, passphrase);
+    const std::string name = "Alex Braun", passphrase = "AlAzazaAl123";
+    const std::string encryptedData = AES::encrypt(name, passphrase);
     std::cout << "Data: \"" << name << "\"\n"
     << "Passphrase: \"" << passphrase << "\"\n"
     << "Encrypted data: \"" << encryptedData << "\"\n"

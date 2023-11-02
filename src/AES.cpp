@@ -4,8 +4,8 @@ using namespace Poco;
 
 std::string AES::encrypt(const std::string& data, const std::string& passphrase) {
     try {
-        std::string initializationVector = generateSalt();
-        Crypto::CipherKey key(AES_MODE, passphrase, initializationVector);
+        const std::string initializationVector = generateSalt();
+        const Crypto::CipherKey key(AES_MODE, passphrase, initializationVector);
         Crypto::Cipher::Ptr cipher = Crypto::CipherFactory::defaultFactory().createCipher(key);
         return encode(initializationVector + cipher->encryptString(data));
     } catch (const Exception& exception) {
@@ -16,12 +16,12 @@ std::string AES::encrypt(const std::string& data, const std::string& passphrase)
 
 std::string AES::decrypt(const std::string& data, const std::string& passphrase) {
     try {
-        std::string decodedData = decode(data);
-        auto delimiter = decodedData.begin() + INITIALIZATION_VECTOR_LENGTH;
-        std::string initializationVector(decodedData.begin(), delimiter);
-        Crypto::CipherKey key(AES_MODE, passphrase, initializationVector);
+        const std::string decodedData = decode(data);
+        const auto delimiter = decodedData.begin() + INITIALIZATION_VECTOR_LENGTH;
+        const std::string initializationVector(decodedData.begin(), delimiter);
+        const Crypto::CipherKey key(AES_MODE, passphrase, initializationVector);
         Crypto::Cipher::Ptr cipher = Crypto::CipherFactory::defaultFactory().createCipher(key);
-        std::string encryptedData(delimiter, decodedData.end());
+        const std::string encryptedData(delimiter, decodedData.end());
         return cipher->decryptString(encryptedData);
     } catch (const Exception& exception) {
         Util::Application::instance().logger().error(exception.displayText());
@@ -32,7 +32,7 @@ std::string AES::decrypt(const std::string& data, const std::string& passphrase)
 std::string AES::encode(const std::string& data) {
     std::stringstream encodedStream;
     Base64Encoder encoder(encodedStream);
-    encoder.write(reinterpret_cast<const char* >(data.data()), static_cast<int>(data.size()));
+    encoder.write(reinterpret_cast<const char*>(data.data()), static_cast<int>(data.size()));
     encoder.close();
     return encodedStream.str();
 }

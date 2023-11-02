@@ -2,7 +2,7 @@
 #include "AES.h"
 
 TEST(AESTest, EncryptionAndDecryption) {
-    std::string data = "StarkNet is an open-source, decentralized platform for building scalable "
+    const std::string data = "StarkNet is an open-source, decentralized platform for building scalable "
                        "and secure applications on Ethereum. It is designed to provide high "
                        "throughput, low-cost transactions, and strong privacy guarantees "
                        "for smart contract execution. StarkNet achieves these goals "
@@ -22,12 +22,11 @@ TEST(AESTest, EncryptionAndDecryption) {
                        "a powerful infrastructure for building scalable and efficient "
                        "blockchain applications.";
 
-    std::string passphrase = "ZK-STARK has big impact on StarkNet";
+    const std::string passphrase = "ZK-STARK has big impact on StarkNet";
 
-    std::string ciphertext = AES::encrypt(data, passphrase);
-    std::string decryptedData = AES::decrypt(ciphertext, passphrase);
+    const std::string ciphertext = AES::encrypt(data, passphrase);
 
-    EXPECT_EQ(data, decryptedData);
+    EXPECT_EQ(data, AES::decrypt(ciphertext, passphrase));
 }
 
 int main() {
