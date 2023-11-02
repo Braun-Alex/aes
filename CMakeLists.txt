@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26)
-project(AES)
+project(aes_wrapper)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -36,14 +36,14 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
     include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-add_library(AES SHARED src/AES.cpp)
+add_library(aes_wrapper SHARED src/AES.cpp)
 
 set(LIB_TEST_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/libtest.cpp
 )
 
 add_executable(libtest ${LIB_TEST_SOURCES})
-target_link_libraries(libtest AES gtest_main Poco::Crypto Poco::Util)
+target_link_libraries(libtest aes_wrapper gtest_main Poco::Crypto Poco::Util)
 
-install(TARGETS AES DESTINATION /usr/lib)
+install(TARGETS aes_wrapper DESTINATION /usr/lib)
 install(FILES include/AES.h DESTINATION include)

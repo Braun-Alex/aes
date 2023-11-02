@@ -2,19 +2,19 @@
 
 using namespace Poco;
 
-std::string AES::encrypt(const std::string &data, const std::string &passphrase) {
+std::string AES::encrypt(const std::string& data, const std::string& passphrase) {
     try {
         std::string initializationVector = generateSalt();
         Crypto::CipherKey key(AES_MODE, passphrase, initializationVector);
         Crypto::Cipher::Ptr cipher = Crypto::CipherFactory::defaultFactory().createCipher(key);
         return encode(initializationVector + cipher->encryptString(data));
-    } catch (const Exception &exception) {
+    } catch (const Exception& exception) {
         Util::Application::instance().logger().error(exception.displayText());
         return "";
     }
 }
 
-std::string AES::decrypt(const std::string &data, const std::string &passphrase) {
+std::string AES::decrypt(const std::string& data, const std::string& passphrase) {
     try {
         std::string decodedData = decode(data);
         auto delimiter = decodedData.begin() + INITIALIZATION_VECTOR_LENGTH;
@@ -23,21 +23,21 @@ std::string AES::decrypt(const std::string &data, const std::string &passphrase)
         Crypto::Cipher::Ptr cipher = Crypto::CipherFactory::defaultFactory().createCipher(key);
         std::string encryptedData(delimiter, decodedData.end());
         return cipher->decryptString(encryptedData);
-    } catch (const Exception &exception) {
+    } catch (const Exception& exception) {
         Util::Application::instance().logger().error(exception.displayText());
         return "";
     }
 }
 
-std::string AES::encode(const std::string &data) {
+std::string AES::encode(const std::string& data) {
     std::stringstream encodedStream;
     Base64Encoder encoder(encodedStream);
-    encoder.write(reinterpret_cast<const char *>(data.data()), static_cast<int>(data.size()));
+    encoder.write(reinterpret_cast<const char* >(data.data()), static_cast<int>(data.size()));
     encoder.close();
     return encodedStream.str();
 }
 
-std::string AES::decode(const std::string &data) {
+std::string AES::decode(const std::string& data) {
     std::stringstream encodedStream(data);
     Base64Decoder decoder(encodedStream);
     std::vector<unsigned char> decodedData;
